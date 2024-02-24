@@ -1,4 +1,4 @@
-package com.example.Beatgenius.entities;
+package com.example.Beatgenius.generic;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,16 +8,17 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@MappedSuperclass
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
     @Version
     private int version;
 }
