@@ -1,9 +1,6 @@
 package com.example.Beatgenius.business.instrumentale;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package com.example.Beatgenius.business.userSecurity.models;
 
+import com.example.Beatgenius.business.instrumentale.Instrumentale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "user_security")
 public class User implements Serializable {
 
     @Id
@@ -35,4 +35,9 @@ public class User implements Serializable {
 
     @ElementCollection
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Instrumentale> instrumentales ;
+
+
 }
