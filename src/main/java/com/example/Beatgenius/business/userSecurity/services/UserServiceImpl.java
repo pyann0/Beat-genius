@@ -2,6 +2,7 @@ package com.example.Beatgenius.business.userSecurity.services;
 
 import com.example.Beatgenius.business.userSecurity.dtos.UserDto;
 import com.example.Beatgenius.business.userSecurity.mappers.UserMapper;
+import com.example.Beatgenius.business.userSecurity.models.User;
 import com.example.Beatgenius.business.userSecurity.repositories.UserRepository;
 import com.example.Beatgenius.business.userSecurity.dtos.UserDto;
 import com.example.Beatgenius.business.userSecurity.dtos.UserSecurity;
@@ -38,7 +39,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDto saveOrUpdate(UserDto dto) {
-        return mapper.toDto(repository.save(mapper.toEntity(dto)));
+
+        User entity = mapper.toEntity(dto);
+        return repository.findById(entity.getId()).map(user -> {
+            entity.setPassword(user.getPassword());
+            entity.setActive(user.isActive());
+            return mapper.toDto(repository.save(entity));
+        }).orElseThrow();
+
     }
 
     @Override

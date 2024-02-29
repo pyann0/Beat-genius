@@ -17,7 +17,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Instrumentale extends BaseEntity {
     private String name;
-    private double price;
     @ManyToOne
     private Catalogue catalogue;
     @ManyToOne

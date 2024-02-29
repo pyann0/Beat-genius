@@ -41,31 +41,38 @@ public class InstrumentaleServiceImpl extends AbstractGenericService<Instrumenta
     }
 
 
-    public String uploadFile(MultipartFile file, String typeFile) throws IOException {
+    /*public String uploadFile(MultipartFile file, String typeFile) throws IOException {
         UUID uuid = UUID.randomUUID();
         String nameFile = uuid.toString() + getFileExtension(file);
         file.transferTo((new File(apiFilePath + "\\" + typeFile + "\\" + nameFile)));
         return nameFile;
 
-    }
-    public List<String> uploadInstrumentale(MultipartFile instrumentale, MultipartFile cover) throws IOException {
+    }*/
+    public InstrumentaleDto uploadInstrumentale(MultipartFile instrumentale, MultipartFile cover, InstrumentaleDto instrumentaleDto) throws IOException {
+        // Génère un identifiant afin qui sois donnée aux fichiers
         UUID uuid = UUID.randomUUID();
-        List<String> fileDetail = new ArrayList<>();
+        // On retourne cette liste qui contiendra le nom des fichiers qu'on enregistre en base de donnée
 
-        if (Objects.equals(getFileExtension(instrumentale), ".mp3") || Objects.equals(getFileExtension(instrumentale), ".wav")){
-            if (Objects.equals(getFileExtension(cover), ".png") || Objects.equals(getFileExtension(cover), ".jpeg") || Objects.equals(getFileExtension(cover), ".jpg")){
+        // Verifie que instrumentale est sois un mp3 ou un wav
+        if ((Objects.equals(getFileExtension(instrumentale), ".mp3") || Objects.equals(getFileExtension(instrumentale), ".wav"))
+                && (Objects.equals(getFileExtension(cover), ".png") || Objects.equals(getFileExtension(cover), ".jpeg") || Objects.equals(getFileExtension(cover), ".jpg"))){
+            //Verifie que cover est un type png, jpeg ou jpg
+
+                // le fichier prends l'indentifiant ainsi que l'extension du fichier ex: uuid.mp3
                 String nameInstrumentale = uuid.toString() + getFileExtension(instrumentale);
+                // Enregistrement du fichier en local dans le chemin configurer dans application.properties ensuite dans le dossier instrumentale
+                // le fichier portera le nom générer
                 instrumentale.transferTo((new File(apiFilePath + "\\instrumentale\\" + nameInstrumentale)));
-                fileDetail.add(nameInstrumentale);
 
                 String nameCover = uuid.toString() + getFileExtension(cover);
                 cover.transferTo((new File(apiFilePath + "\\cover\\" + nameCover)));
-                fileDetail.add(nameCover);
+                    instrumentaleDto.setFile(nameInstrumentale);
+                    instrumentaleDto.setCover(nameCover);
+                    return instrumentaleDto;
             }
 
+        return null;
 
-        }
-        return fileDetail;
 
     }
 
@@ -73,13 +80,12 @@ public class InstrumentaleServiceImpl extends AbstractGenericService<Instrumenta
 
         Optional<InstrumentaleDto> instrumentale = this.findById(id);
         try {
+            // Récupère le chemin du fichier a supprimer
             Path cheminCover = Paths.get(apiFilePath + "\\cover\\" + instrumentale.get().getCover());
             Path cheminFile = Paths.get(apiFilePath + "\\instrumentale\\" + instrumentale.get().getFile());
-            System.out.println(cheminCover);
-            System.out.println(cheminFile);
+            // Supprime le fichier
             Files.delete(cheminCover);
             Files.delete(cheminFile);
-            System.out.println("La suppression est réussi");
             return true;
 
 

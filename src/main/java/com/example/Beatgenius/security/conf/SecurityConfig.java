@@ -33,12 +33,13 @@ public class SecurityConfig {
             "/users/**",
             "/catalogues/**",
             "/",
-            "/swagger-ui/index.html"
+            "/swagger-ui/**",
+            "/catalogues"
 
     };
 
     public static final String[] ADMIN_URL = new String[] {
-            "/catalogues"
+            "/admin"
 
     };
 

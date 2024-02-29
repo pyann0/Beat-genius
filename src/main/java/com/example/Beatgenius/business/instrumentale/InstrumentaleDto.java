@@ -10,7 +10,6 @@ public class InstrumentaleDto {
     private long id;
     private int version;
     private String name;
-    private double price;
     private long catalogueId;
     private long userId;
     private String cover;

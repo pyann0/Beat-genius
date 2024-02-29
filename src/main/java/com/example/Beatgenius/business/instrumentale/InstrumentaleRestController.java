@@ -29,18 +29,8 @@ public class InstrumentaleRestController extends AbstractGenericRestController<I
     // Simplifier le code
     protected ResponseEntity<InstrumentaleDto> save(@RequestPart("cover") MultipartFile cover, @RequestPart("file") MultipartFile file, @RequestParam("instrumentale") String instrumentaleJson) throws IOException {
         InstrumentaleDto instrumentaleDto =objectMapper.readValue(instrumentaleJson, InstrumentaleDto.class);
-        List<String> fileDetail = service.uploadInstrumentale(file, cover);
-        if (fileDetail.get(0) != null && fileDetail.get(1)!=null){
-            instrumentaleDto.setFile(fileDetail.get(0));
-            instrumentaleDto.setCover(fileDetail.get(1));
-            System.out.println(instrumentaleDto.getFile());
-            System.out.println(instrumentaleDto.getCover());
-            return super.saveOrUpdate(instrumentaleDto);
-        } else {
-            return null;
-        }
-
-
+        InstrumentaleDto dto = service.uploadInstrumentale(file, cover, instrumentaleDto);
+        return super.saveOrUpdate(dto);
     }
 
     @Override

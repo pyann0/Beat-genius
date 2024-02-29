@@ -1,12 +1,9 @@
 package com.example.Beatgenius.business.instrumentale;
 
 import com.example.Beatgenius.generic.GenericMapper;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface InstrumentaleMapper extends GenericMapper<InstrumentaleDto, Instrumentale> {
 
     @Override

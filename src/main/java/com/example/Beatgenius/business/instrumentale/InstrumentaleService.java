@@ -12,7 +12,7 @@ public interface InstrumentaleService extends GenericService<InstrumentaleDto> {
     String getFileExtension(MultipartFile file) ;
 
 
-    String uploadFile(MultipartFile file, String typeFile) throws IOException;
-    List<String> uploadInstrumentale(MultipartFile instrumentale, MultipartFile cover) throws IOException;
+    //String uploadFile(MultipartFile file, String typeFile) throws IOException;
+    InstrumentaleDto uploadInstrumentale(MultipartFile instrumentale, MultipartFile cover, InstrumentaleDto instrumentaleDto) throws IOException;
     boolean deleteFile(long id);
 }
